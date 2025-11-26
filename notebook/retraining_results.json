@@ -1,0 +1,61 @@
+{
+  "dataset_info": {
+    "original_size": 8501,
+    "new_size": 14537,
+    "combined_size": 23038,
+    "training_size": 18430,
+    "test_size": 4608
+  },
+  "combined_test_performance": {
+    "Naive_Bayes_Combined": {
+      "accuracy": 0.7973090277777778,
+      "precision": 0.8213278646500897,
+      "recall": 0.9311246730601569,
+      "f1_score": 0.8727867066194498
+    },
+    "Random_Forest_Combined": {
+      "accuracy": 0.7927517361111112,
+      "precision": 0.7832725615314494,
+      "recall": 0.998837547224644,
+      "f1_score": 0.8780176267722571
+    },
+    "LightGBM_Combined": {
+      "accuracy": 0.8187934027777778,
+      "precision": 0.8206200787401575,
+      "recall": 0.9691950014530659,
+      "f1_score": 0.8887408394403731
+    },
+    "Complement_NB_Combined": {
+      "accuracy": 0.7076822916666666,
+      "precision": 0.8338647959183674,
+      "recall": 0.7599535018889858,
+      "f1_score": 0.7951953778318382
+    },
+    "Passive_Aggressive_Combined": {
+      "accuracy": 0.6864149305555556,
+      "precision": 0.8103233830845771,
+      "recall": 0.7573379831444348,
+      "f1_score": 0.782935256121376
+    }
+  },
+  "new_dataset_performance": {
+    "Naive_Bayes_Combined": 0.73357639127743,
+    "Random_Forest_Combined": 0.7339891311824999,
+    "LightGBM_Combined": 0.7805599504712114,
+    "Complement_NB_Combined": 0.685079452431726,
+    "Passive_Aggressive_Combined": 0.8389626470385911
+  },
+  "training_times": {
+    "Naive_Bayes": 0.02383732795715332,
+    "Random_Forest": 1.7498433589935303,
+    "LightGBM": 14.794260263442993,
+    "Complement_NB": 0.020790815353393555,
+    "Passive_Aggressive": 0.5304605960845947
+  },
+  "improvement_analysis": {
+    "original_best_accuracy": 0.7614,
+    "retrained_best_accuracy": 0.8389626470385911,
+    "improvement": 0.07756264703859117,
+    "improvement_percentage": 7.756264703859117
+  }
+}
