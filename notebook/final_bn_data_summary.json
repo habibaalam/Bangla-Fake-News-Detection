@@ -1,0 +1,19 @@
+{
+  "dataset_size": 14537,
+  "models_tested": [
+    "Naive_Bayes",
+    "Random_Forest",
+    "LightGBM",
+    "Complement_NB",
+    "Passive_Aggressive"
+  ],
+  "has_labels": true,
+  "accuracies": {
+    "Naive_Bayes": 0.7333700213248951,
+    "Random_Forest": 0.761436334869643,
+    "LightGBM": 0.7555203962303089,
+    "Complement_NB": 0.7044782279700076,
+    "Passive_Aggressive": 0.7450643186352067
+  },
+  "best_model": "Random_Forest"
+}
