@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+notebook/final_bn_data_predictions.csv filter=lfs diff=lfs merge=lfs -text
+data/final_bn_data.csv filter=lfs diff=lfs merge=lfs -text
