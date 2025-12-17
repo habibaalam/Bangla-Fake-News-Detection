@@ -1,7 +1,7 @@
 import streamlit as st
+import os
 import pickle
 import joblib
-import os
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import numpy as np
@@ -10,8 +10,9 @@ import numpy as np
 # Paths
 # ------------------------------
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-VECTORIZER_PATH = os.path.join(CURRENT_DIR, "tfidf_vectorizer.pkl")
 
+# Your models & vectorizer
+VECTORIZER_PATH = os.path.join(CURRENT_DIR, "tfidf_vectorizer.pkl")
 MODEL_PATHS = {
     "Logistic Regression": os.path.join(CURRENT_DIR, "logistic_regression_model.pkl"),
     "SVM": os.path.join(CURRENT_DIR, "svm_model.pkl"),
@@ -19,27 +20,35 @@ MODEL_PATHS = {
     "XGBoost": os.path.join(CURRENT_DIR, "xgboost_model.pkl")
 }
 
+# Friend's vectorizer & models
+FRIEND_VECTORIZER_PATH = os.path.join(CURRENT_DIR, "final_vectorizer.pkl")
+FRIEND_MODELS = {
+    "LightGBM": os.path.join(CURRENT_DIR, "frontend_lightgbm.pkl"),
+    "Passive Aggressive": os.path.join(CURRENT_DIR, "frontend_passive_aggressive.pkl")
+}
+
+# BERT
 BERT_DIR = os.path.join(CURRENT_DIR, "bangla_bert_fake_news_v3")
 
 # ------------------------------
-# Load TF-IDF vectorizer
+# Load your vectorizer
 # ------------------------------
-try:
-    with open(VECTORIZER_PATH, "rb") as f:
-        VECTORIZER = pickle.load(f)
-except FileNotFoundError:
-    st.error(f"TF-IDF vectorizer not found at {VECTORIZER_PATH}")
-    st.stop()
+with open(VECTORIZER_PATH, "rb") as f:
+    VECTORIZER = pickle.load(f)
 
-# ------------------------------
-# Load ML models
-# ------------------------------
+# Load your models
 MODELS = {}
 for name, path in MODEL_PATHS.items():
     if os.path.exists(path):
         MODELS[name] = joblib.load(path)
-    else:
-        st.warning(f"{name} model not found at {path}")
+
+# ------------------------------
+# Load friend's vectorizer
+# ------------------------------
+friend_vectorizer = joblib.load(FRIEND_VECTORIZER_PATH)
+
+# Load friend's models
+friend_models = {name: joblib.load(path) for name, path in FRIEND_MODELS.items()}
 
 # ------------------------------
 # Load BERT
@@ -78,43 +87,58 @@ if st.button("Predict"):
     if not user_input.strip():
         st.warning("Please enter some text!")
     else:
-        X_input = VECTORIZER.transform([user_input])
-        st.subheader("Predictions with Confidence:")
-
-        # Store all probabilities to calculate overall confidence
         all_probs = []
 
-        # Traditional ML models
+        # ------------------------------
+        # Your ML models
+        # ------------------------------
+        X_input = VECTORIZER.transform([user_input])
+        st.subheader("Models Predictions:")
         for model_name, model in MODELS.items():
             if hasattr(model, "predict_proba"):
-                probs = model.predict_proba(X_input)[0]  # [fake_prob, real_prob]
+                probs = model.predict_proba(X_input)[0]
                 all_probs.append(probs)
                 pred = int(model.predict(X_input)[0])
-                st.write(
-                    f"**{model_name}** predicts: **{label_map[pred]}** "
-                    f"(Fake: {probs[0]*100:.2f}%, Real: {probs[1]*100:.2f}%)"
-                )
+                st.write(f"**{model_name}** → {label_map[pred]} "
+                         f"(Fake: {probs[0]*100:.2f}%, Real: {probs[1]*100:.2f}%)")
             else:
-                # fallback if no probability
                 pred = int(model.predict(X_input)[0])
-                st.write(f"**{model_name}** predicts: **{label_map[pred]}**")
+                st.write(f"**{model_name}** → {label_map[pred]}")
 
-        # BERT
+        # ------------------------------
+        # Friend's ML models
+        # ------------------------------
+        X_friend = friend_vectorizer.transform([user_input])
+        for model_name, model in friend_models.items():
+            if hasattr(model, "predict_proba"):
+                probs = model.predict_proba(X_friend)[0]
+                all_probs.append(probs)
+                pred = int(model.predict(X_friend)[0])
+                st.write(f"**{model_name}** → {label_map[pred]} "
+                         f"(Fake: {probs[0]*100:.2f}%, Real: {probs[1]*100:.2f}%)")
+            else:
+                pred = int(model.predict(X_friend)[0])
+                st.write(f"**{model_name}** → {label_map[pred]}")
+
+        # ------------------------------
+        # BERT model
+        # ------------------------------
         if bert_model is not None:
             pred, probs = predict_bert(user_input)
             if pred is not None:
                 all_probs.append(probs)
-                st.write(
-                    f"**BERT** predicts: **{label_map[pred]}** "
-                    f"(Fake: {probs[0]*100:.2f}%, Real: {probs[1]*100:.2f}%)"
-                )
+                st.subheader("BERT Prediction:")
+                st.write(f"**BERT** → {label_map[pred]} "
+                         f"(Fake: {probs[0]*100:.2f}%, Real: {probs[1]*100:.2f}%)")
 
         # ------------------------------
-        # Overall confidence
+        # Overall Confidence
+        # ------------------------------
         if all_probs:
-            overall = np.mean(np.array(all_probs), axis=0)  # average across models
-            st.subheader("Overall Confidence:")
+            overall = np.mean(np.array(all_probs), axis=0)
+            st.subheader("Overall Confidence Across All Models:")
             st.write(f"Fake: {overall[0]*100:.2f}% | Real: {overall[1]*100:.2f}%")
+
 
 
 
