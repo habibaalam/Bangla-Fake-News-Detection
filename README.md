@@ -44,7 +44,7 @@ The system uses the following models:
 - Multiple model predictions
 - Fake vs Real probability output
 - Overall confidence calculation (average of all model probabilities)
-- Interactive web interface using Streamlit
+- An easy-to-use web application for Bangla fake news detection.
 
 ---
 ## Project Architecture
@@ -59,6 +59,10 @@ The system uses the following models:
 1. Install required libraries   
 2. Run the Streamlit application  
    python -m streamlit run notebook\app.py
+## Developed by
+
+Habiba Alam Raisa (2231272642)
+Rifat Imtiaze Ruddro (2311474642)
 
 # The processed dataset is too large, you can download it from here: https://drive.google.com/file/d/1Dmm50Edrz64ldr1wfWXZQl_x4zKZkD0_/view?usp=drive_link 
  
