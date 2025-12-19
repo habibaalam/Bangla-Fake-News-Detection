@@ -60,9 +60,9 @@ The system uses the following models:
 2. Run the Streamlit application  
    python -m streamlit run notebook\app.py
 ## Developed by
+- Habiba Alam Raisa (2231272642)
+- Rifat Imtiaze Ruddro (2311474642)
 
-#Habiba Alam Raisa (2231272642)
-#Rifat Imtiaze Ruddro (2311474642)
 
 # The processed dataset is too large, you can download it from here: https://drive.google.com/file/d/1Dmm50Edrz64ldr1wfWXZQl_x4zKZkD0_/view?usp=drive_link 
  
