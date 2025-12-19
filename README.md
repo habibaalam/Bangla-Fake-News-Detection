@@ -1,4 +1,4 @@
-# Bangla Fake News Detection Using Machine Learning & Natural Language Processing.
+# Bangla Fake News Detection Using Machine Learning & Natural Language Processing
 ## Project Overview
 This is a machine learning  application designed to identify whether a Bangla news article is **Fake** or **Real**.  
 Due to the rapid spread of misinformation on social media and online platforms, this system aims to assist users in verifying the authenticity of Bangla news content.
