@@ -28,7 +28,7 @@ The system uses the following models:
 
 ---
 ## Technologies Used
-- Python  3.14.0
+- Python  
 - Streamlit  
 - Scikit-learn  
 - Hugging Face Transformers  
