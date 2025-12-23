@@ -32,9 +32,7 @@ The system uses the following models:
 - Streamlit  
 - Scikit-learn  
 - Hugging Face Transformers  
-- PyTorch  
-- XGBoost  
-- LightGBM  
+- PyTorch    
 - NumPy
 - Pandas  
 
