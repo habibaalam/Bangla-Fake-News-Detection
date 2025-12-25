@@ -135,7 +135,7 @@ if st.button("Predict"):
         st.subheader("Overall Confidence Across All Models:")
         st.write(f"Fake: {overall[0]*100:.2f}% | Real: {overall[1]*100:.2f}%")
     
-    # Create DataFrame
+    #  DataFrame
         confidence_df = pd.DataFrame({
         "Label": ["Fake", "Real"],
         "Confidence": overall * 100
@@ -152,7 +152,7 @@ if st.button("Predict"):
         tooltip=[alt.Tooltip("Label"), alt.Tooltip("Confidence", format=".2f")]
     )
     
-    # Add text labels above bars
+    #  text labels above bars
         text = chart.mark_text(
         align='center',
         baseline='bottom',
